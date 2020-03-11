@@ -2,8 +2,11 @@ from django.shortcuts import render
 from django.core.mail import send_mail
 
 # Create your views here.
+
+
 def home(request):
     return render(request, 'home.html', {})
+
 
 def contact(request):
     if request.method == "POST":
@@ -14,14 +17,15 @@ def contact(request):
 
         # send an email
         send_mail(
-            message_name, # subject
-            message, # message
-            message_email, # from email
-            ['alexruadev@gmail.com'], # to email
+            message_name,  # subject
+            message,  # message
+            message_email,  # from email
+            ['alexruadev@gmail.com'],  # to email
         )
         return render(request, 'contact.html', {'message_name': message_name})
     else:
         return render(request, 'contact.html', {})
+
 
 def appointment(request):
     if request.method == "POST":
@@ -35,23 +39,45 @@ def appointment(request):
         your_message = request.POST['your-message']
 
         # send an email
-        appointment_details = "Name: " + your_name + " Phone: " + your_phone + " Email: " +  your_email + " Address:" + your_address + " Time: " + your_schedule + " Day: " + your_day + " Message: " + your_message
+        appointment_details = "Name: " + your_name + " Phone: " + your_phone + " Email: " + your_email + \
+            " Address:" + your_address + " Time: " + your_schedule + \
+            " Day: " + your_day + " Message: " + your_message
         send_mail(
-            'Appointment Request', # subject
-            appointment_details, # message
-            your_email, # from email
-            ['alexruadev@gmail.com'], # to email
+            'Appointment Request',  # subject
+            appointment_details,  # message
+            your_email,  # from email
+            ['alexruadev@gmail.com'],  # to email
         )
-    
+
         return render(request, 'appointment.html', {
             'your_name': your_name,
             'your_phone': your_phone,
             'your_email': your_email,
-            'your_address': your_address, 
-            'your_schedule': your_schedule, 
-            'your_day': your_day, 
+            'your_address': your_address,
+            'your_schedule': your_schedule,
+            'your_day': your_day,
             'your_message': your_message,
-            }
+        }
         )
     else:
         return render(request, 'home.html', {})
+
+
+def service(request):
+    return render(request, 'service.html', {})
+
+
+def pricing(request):
+    return render(request, 'pricing.html', {})
+
+
+def about(request):
+    return render(request, 'about.html', {})
+
+
+def blog(request):
+    return render(request, 'blog.html', {})
+
+
+# def blog_details(request):
+#     return render(request, 'blog_details.html', {})
