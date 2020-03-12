@@ -10,9 +10,12 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
-from decouple import config
+
 
 import os
+import django_heroku
+import dj_database_url
+from decouple import config
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -51,6 +54,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'dentist.urls'
@@ -127,6 +131,8 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
 
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 # To test our form in contact page
 # terminal type to start server : python -m smtpd -n -c DebuggingServer localhost:1025
 # EMAIL_HOST = 'localhost'
@@ -137,9 +143,12 @@ STATICFILES_DIRS = [
 # EMAIL_USE_SSL = False 
 
 # production
-# EMAIL_HOST = 'smtp.gmail.com'
-# EMAIL_PORT = 587
-# EMAIL_HOST_USER = config('email')
-# EMAIL_HOST_PASSWORD = config('password')
-# EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = config('email')
+EMAIL_HOST_PASSWORD = config('password')
+EMAIL_USE_TLS = True
+
 # EMAIL_USE_SSL = False 
+
+django_heroku.settings(locals())
